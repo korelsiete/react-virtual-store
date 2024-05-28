@@ -1,0 +1,32 @@
+.notfound {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  height: 100vh;
+  background-color: #3c3c3c;
+  color: white;
+}
+
+.title {
+  margin: 0;
+  font-size: 65px;
+  font-weight: 900;
+}
+
+.button {
+  background-color: #57f;
+  padding: 8px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: white;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.button:hover {
+  transition: background-color 0.3s ease;
+  background-color: #45f;
+}

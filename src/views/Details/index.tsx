@@ -1,7 +1,14 @@
+import { useParams } from "react-router-dom";
 import Footer from "../../components/Footer";
 import NavBar from "../../components/NavBar";
 import styles from "./Details.module.css";
+import products from "../../assets/products.json";
+
 const Details = () => {
+  const { id } = useParams();
+  const { title, images, colors, description, price } =
+    products.find((product) => product.id === Number(id)) || products[0];
+
   return (
     <>
       <NavBar />
@@ -10,57 +17,48 @@ const Details = () => {
           <div id="details" className={styles["columns-container"]}>
             <section className={styles["product-images-block"]}>
               <div className={styles["product-images"]}>
-                <img
-                  className={styles["mini-img"]}
-                  src="https://i.postimg.cc/HxGQcrcp/mock1.jpg"
-                  alt="MacBook Pro 13'4"
-                />
-                <img
-                  className={styles["mini-img"]}
-                  src="https://i.postimg.cc/Y91Q1tYQ/mock2.jpg"
-                  alt="MacBook Pro 13'4"
-                />
+                {images.map((imageUrl, index) => (
+                  <img
+                    key={index}
+                    className={styles["mini-img"]}
+                    src={imageUrl}
+                    alt={title}
+                  />
+                ))}
               </div>
               <img
                 className={styles["big-img"]}
                 id="big-img"
-                src="https://i.postimg.cc/HxGQcrcp/mock1.jpg"
-                alt="MacBook Pro 13'4"
+                src={images[0]}
+                alt={title}
               />
             </section>
             <div className={styles["product-description-block"]}>
-              <h1 className={styles["product-title"]}>MacBook Pro 13'4</h1>
+              <h1 className={styles["product-title"]}>{title}</h1>
               <form className={styles["product-selector"]}>
                 <fieldset className={styles["product-fieldset"]}>
                   <label className={styles["product-label"]} htmlFor="color">
                     Color
                   </label>
                   <select className={styles["product-select"]} id="color">
-                    <option value="Silver">Silver</option>
+                    {colors.map((color, index) => (
+                      <option key={index} value={color}>
+                        {color}
+                      </option>
+                    ))}
                   </select>
                 </fieldset>
               </form>
               <div className={styles["product-description"]}>
                 <span className={styles["product-label"]}>Descripción</span>
-                <p>
-                  Experience the power of creativity with the MacBook Pro 13'4.
-                  Featuring 8GB of RAM and 512GB of storage, this laptop
-                  provides the performance and storage capacity needed for
-                  demanding tasks. The sleek design in silver and space gray
-                  adds a touch of sophistication. The high-resolution Retina
-                  display brings your visuals to life, whether you're editing
-                  photos, creating videos, or simply browsing the web. With the
-                  latest technology and a lightweight build, the MacBook Pro
-                  13'4 is the perfect companion for professionals and creative
-                  individuals alike.
-                </p>
+                <p>{description}</p>
               </div>
             </div>
             <div className={styles["product-checkout-block"]}>
               <div className={styles["checkout-container"]}>
                 <span className={styles["checkout-total-label"]}>Total:</span>
                 <h2 id="price" className={styles["checkout-total-price"]}>
-                  $750000
+                  ${price}
                 </h2>
                 <p className={styles["checkout-description"]}>
                   Incluye impuesto PAIS y percepción AFIP. Podés recuperar AR$

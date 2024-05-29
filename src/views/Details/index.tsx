@@ -1,13 +1,42 @@
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import Footer from "../../components/Footer";
 import NavBar from "../../components/NavBar";
 import styles from "./Details.module.css";
 import products from "../../assets/products.json";
 
-const Details = () => {
+type CartProduct = {
+  id: number;
+  title: string;
+  description: string;
+  image: string;
+  price: number;
+  qty: number;
+  colors: string[];
+};
+
+type Props = {
+  addToCart: (product: CartProduct) => void;
+};
+
+const Details = ({ addToCart }: Props) => {
   const { id } = useParams();
   const { title, images, colors, description, price } =
     products.find((product) => product.id === Number(id)) || products[0];
+
+  const [quantity, setQuantity] = useState(1);
+  const [color, setColor] = useState(colors[0]);
+  const subtotal = quantity * price;
+
+  const product: CartProduct = {
+    id: Number(id),
+    title,
+    description,
+    image: images[0],
+    price,
+    qty: quantity,
+    colors: [color],
+  };
 
   return (
     <>
@@ -40,7 +69,11 @@ const Details = () => {
                   <label className={styles["product-label"]} htmlFor="color">
                     Color
                   </label>
-                  <select className={styles["product-select"]} id="color">
+                  <select
+                    className={styles["product-select"]}
+                    id="color"
+                    onChange={(e) => setColor(e.target.value)}
+                  >
                     {colors.map((color, index) => (
                       <option key={index} value={color}>
                         {color}
@@ -58,7 +91,7 @@ const Details = () => {
               <div className={styles["checkout-container"]}>
                 <span className={styles["checkout-total-label"]}>Total:</span>
                 <h2 id="price" className={styles["checkout-total-price"]}>
-                  ${price}
+                  ${subtotal}
                 </h2>
                 <p className={styles["checkout-description"]}>
                   Incluye impuesto PAIS y percepción AFIP. Podés recuperar AR$
@@ -86,8 +119,17 @@ const Details = () => {
                 </ul>
                 <div className={styles["checkout-process"]}>
                   <div className={styles["top"]}>
-                    <input type="number" min="1" />
-                    <button type="button" className={styles["cart-btn"]}>
+                    <input
+                      type="number"
+                      min="1"
+                      value={quantity}
+                      onChange={(e) => setQuantity(Number(e.target.value))}
+                    />
+                    <button
+                      type="button"
+                      className={styles["cart-btn"]}
+                      onClick={() => addToCart(product)}
+                    >
                       Añadir al Carrito
                     </button>
                   </div>

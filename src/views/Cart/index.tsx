@@ -3,7 +3,11 @@ import Hero from "../../components/Hero";
 import NavBar from "../../components/NavBar";
 import styles from "./Cart.module.css";
 
-const Cart = () => {
+type Props = {
+  cart: Array<object>;
+};
+
+const Cart = ({ cart }: Props) => {
   return (
     <>
       <NavBar />
@@ -34,7 +38,6 @@ const Cart = () => {
               className={styles["product-input"]}
               type="number"
               name="quantity"
-              value="1"
               min="1"
               id="P7Q8R90"
             />

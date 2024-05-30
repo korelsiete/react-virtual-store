@@ -49,7 +49,8 @@ const Details: React.FC<DetailsProps> = ({ addToCart }) => {
                 alt={title}
               />
             </section>
-            <div className={styles["product-description-block"]}>
+
+            <section className={styles["product-description-block"]}>
               <h1 className={styles["product-title"]}>{title}</h1>
               <form className={styles["product-selector"]}>
                 <fieldset className={styles["product-fieldset"]}>
@@ -73,8 +74,9 @@ const Details: React.FC<DetailsProps> = ({ addToCart }) => {
                 <span className={styles["product-label"]}>Descripción</span>
                 <p>{description}</p>
               </div>
-            </div>
-            <div className={styles["product-checkout-block"]}>
+            </section>
+
+            <section className={styles["product-checkout-block"]}>
               <div className={styles["checkout-container"]}>
                 <span className={styles["checkout-total-label"]}>Total:</span>
                 <h2 id="price" className={styles["checkout-total-price"]}>
@@ -122,8 +124,9 @@ const Details: React.FC<DetailsProps> = ({ addToCart }) => {
                   </div>
                 </div>
               </div>
-            </div>
+            </section>
           </div>
+
           <div className={styles["sales-block"]}>
             <h2 className={styles["sales-title"]}>Ofertas de la semana</h2>
             <div

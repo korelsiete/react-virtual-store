@@ -1,25 +1,12 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import { DetailsProps } from "./Details.types";
 import Footer from "../../components/Footer";
 import NavBar from "../../components/NavBar";
 import styles from "./Details.module.css";
 import products from "../../assets/products.json";
 
-type CartProduct = {
-  id: number;
-  title: string;
-  description: string;
-  image: string;
-  price: number;
-  qty: number;
-  colors: string[];
-};
-
-type Props = {
-  addToCart: (product: CartProduct) => void;
-};
-
-const Details = ({ addToCart }: Props) => {
+const Details: React.FC<DetailsProps> = ({ addToCart }) => {
   const { id } = useParams();
   const { title, images, colors, description, price } =
     products.find((product) => product.id === Number(id)) || products[0];

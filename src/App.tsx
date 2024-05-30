@@ -6,16 +6,6 @@ import Home from "./views/Home";
 import NotFound from "./views/NotFound";
 import "./App.module.css";
 
-type CartProduct = {
-  id: number;
-  title: string;
-  description: string;
-  image: string;
-  price: number;
-  qty: number;
-  colors: string[];
-};
-
 const App = () => {
   const [cart, setCart] = useState(Array<CartProduct>);
 
@@ -40,7 +30,7 @@ const App = () => {
   const browserRouter = createBrowserRouter([
     { path: "/", element: <Home /> },
     { path: "/details/:id", element: <Details addToCart={handleAddToCart} /> },
-    { path: "/cart", element: <Cart cart={cart} /> },
+    { path: "/cart", element: <Cart cart={[]} /> },
     { path: "/*", element: <NotFound /> },
   ]);
 

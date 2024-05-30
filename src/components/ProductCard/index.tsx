@@ -1,23 +1,15 @@
 import { Link } from "react-router-dom";
 import styles from "./ProductCard.module.css";
+import { ProductCardProps } from "./ProductCard.types";
 
-type Props = {
-  id: number;
-  title: string;
-  description: string;
-  images: string[];
-  price: number;
-  onsale: boolean;
-};
-
-const ProductCard = ({
+const ProductCard: React.FC<ProductCardProps> = ({
   id,
   title,
   images,
   description,
   price,
   onsale,
-}: Props) => {
+}) => {
   return (
     <Link className={styles["product-card"]} to={`/details/${id}`}>
       <img className={styles["product-img"]} src={images[0]} alt={title} />

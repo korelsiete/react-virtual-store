@@ -1,11 +1,7 @@
 import styles from "./Hero.module.css";
+import { HeroProps } from "./Hero.types";
 
-type Props = {
-  first: string;
-  second: string;
-};
-
-const Hero = ({ first, second }: Props) => {
+const Hero: React.FC<HeroProps> = ({ first, second }) => {
   return (
     <section className={styles["hero-section"]}>
       <article className={styles["hero-title"]}>

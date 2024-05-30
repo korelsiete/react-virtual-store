@@ -2,12 +2,11 @@ import Footer from "../../components/Footer";
 import Hero from "../../components/Hero";
 import NavBar from "../../components/NavBar";
 import styles from "./Cart.module.css";
+import { CartProps } from "./Cart.types";
 
-type Props = {
-  cart: Array<object>;
-};
+const Cart: React.FC<CartProps> = ({ cart }) => {
+  console.log(cart);
 
-const Cart = ({ cart }: Props) => {
   return (
     <>
       <NavBar />

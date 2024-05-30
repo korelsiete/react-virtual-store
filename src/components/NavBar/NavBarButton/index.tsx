@@ -1,12 +1,8 @@
 import { Link } from "react-router-dom";
 import styles from "./NavBarButton.module.css";
+import { NavBarButtonProps } from "./NavBarButton.types";
 
-type Props = {
-  title: string;
-  link: string;
-};
-
-const NavBarButton = ({ title, link }: Props) => {
+const NavBarButton: React.FC<NavBarButtonProps> = ({ title, link }) => {
   return (
     <li className={styles["nav-li"]}>
       <Link className={styles["nav-a"]} to={link}>

@@ -14,8 +14,15 @@
   align-items: center;
   gap: 20px;
 }
-.product-cart strong {
-  font-size: 18px;
+.product-title {
+  font-size: 20px;
+  font-weight: 600;
+  text-decoration: none;
+  color: black;
+  transition: color 0.2s ease;
+}
+.product-title:hover {
+  color: #ff3b3c;
 }
 .product-img {
   width: 100px;
@@ -46,4 +53,16 @@
   border-radius: 10px;
   border: 1px #eaeaea solid;
   padding: 5px;
+}
+
+.delete {
+  font-size: 22px;
+  font-weight: 700;
+  font-style: normal;
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.2s ease-in;
+}
+.delete:hover {
+  color: #ff3b3c;
 }

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styles from "./ProductCart.module.css";
 import { CartProductProps } from "./ProductCart.types";
 
@@ -10,12 +11,13 @@ const ProductCart: React.FC<CartProductProps> = ({
   qty,
   price,
   onChange,
+  onClick
 }) => {
   return (
     <article className={styles["product-cart"]}>
       <img className={styles["product-img"]} src={image} alt={title} />
       <div className={styles["product-details"]}>
-        <strong className={styles["product-title"]}>{title}</strong>
+        <Link to={`/details/${id}`} className={styles["product-title"]}>{title}</Link>
         <span className={styles["product-description"]}>{color}</span>
         <p className={styles["product-description"]}>{description}</p>
         <input
@@ -29,6 +31,7 @@ const ProductCart: React.FC<CartProductProps> = ({
         />
       </div>
       <strong className={styles["price"]}>$ {price * qty}</strong>
+      <i className={styles["delete"]} onClick={() =>onClick(id)}>X</i>
     </article>
   );
 };

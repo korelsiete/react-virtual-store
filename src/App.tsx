@@ -41,6 +41,10 @@ const App = () => {
     return cart.some((cartProduct: CartProduct) => cartProduct.id === id);
   }
 
+  function clearCart(): void {
+    saveCart([]);
+  }
+
   function handleProductQuantity(id: number, quantity: number): void {
     const updatedCart = cart.map((cartProduct: CartProduct) => {
       if (cartProduct.id === id) return { ...cartProduct, qty: quantity };
@@ -67,7 +71,7 @@ const App = () => {
     {
       path: "/cart",
       element: (
-        <Cart cart={cart} totalPrice={totalPriceCart} onChange={handleProductQuantity} />
+        <Cart cart={cart} totalPrice={totalPriceCart} onChange={handleProductQuantity} deleteFromCart={deleteFromCart} clearCart={clearCart}/>
       ),
     },
     { path: "/*", element: <NotFound /> },

@@ -1,5 +1,5 @@
 export interface CartProps {
-  total: number;
+  totalPrice: number;
   cart: Array<CartProduct> | [];
   onChange: (id: number, qty: number) => void;
 }

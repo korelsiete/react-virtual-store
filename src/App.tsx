@@ -1,5 +1,5 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import useLocalStorage from "./hooks/useLocalStorage.js";
+import useLocalStorage from "./hooks/useLocalStorage.ts";
 import productsJSON from "./assets/products.json";
 import Cart from "./views/Cart";
 import Details from "./views/Details";
@@ -11,47 +11,63 @@ const App = () => {
   const [products] = useLocalStorage("products", productsJSON);
   const [cart, saveCart] = useLocalStorage("cart", []);
 
-  const total = cart.reduce(
-    (acc: number, productCart: CartProduct) =>
-      acc + productCart.price * productCart.qty,
+  const totalPriceCart = cart.reduce(
+    (acc: number, cartProduct: CartProduct) =>
+      acc + cartProduct.price * cartProduct.qty,
     0
   );
 
-  function handleQuantityProduct(id: number, quantity: number): void {
-    const newCart = cart.map((productCart: CartProduct) => {
-      if (productCart.id === id) return { ...productCart, qty: quantity };
-      return productCart;
-    });
-    saveCart(newCart);
+  function getProduct(id: number) {
+    return products.find((product: Product) => product.id === id);
   }
 
-  function handleAddToCart(product: CartProduct): void {
-    const { id, colors, qty } = product;
-    const isProductOnCart = cart.some(
-      (productCart: CartProduct) => productCart.id === id
+  function getCartProduct(id: number) {
+    return cart.find((cartProduct: CartProduct) => cartProduct.id === id);
+  }
+
+  function addToCart(product: CartProduct): void {
+    const updatedCart = [...cart, product];
+    saveCart(updatedCart);
+  }
+
+  function deleteFromCart(id: number): void {
+    const updatedCart = cart.filter(
+      (cartProduct: CartProduct) => cartProduct.id !== id
     );
+    saveCart(updatedCart);
+  }
 
-    const newCart = isProductOnCart
-      ? cart.map((productCart: CartProduct) => {
-          if (productCart.id !== id) return productCart;
-          return {
-            ...productCart,
-            colors: [...productCart.colors, ...colors],
-            qty: productCart.qty + qty,
-          };
-        })
-      : [...cart, product];
+  function checkProductOnCart(id: number) : boolean {
+    return cart.some((cartProduct: CartProduct) => cartProduct.id === id);
+  }
 
-    saveCart(newCart);
+  function handleProductQuantity(id: number, quantity: number): void {
+    const updatedCart = cart.map((cartProduct: CartProduct) => {
+      if (cartProduct.id === id) return { ...cartProduct, qty: quantity };
+      return cartProduct;
+    });
+
+    saveCart(updatedCart);
+  }
+
+  function handleOnClick(id: number, product: CartProduct): void {
+    if (checkProductOnCart(id)) {
+      deleteFromCart(id);
+    } else {
+      addToCart(product);
+    }
   }
 
   const browserRouter = createBrowserRouter([
     { path: "/", element: <Home products={products} /> },
-    { path: "/details/:id", element: <Details addToCart={handleAddToCart} /> },
+    {
+      path: "/details/:id",
+      element: <Details getProduct={getProduct} getCartProduct={getCartProduct} checkProductOnCart={checkProductOnCart} onClick={handleOnClick}  />,
+    },
     {
       path: "/cart",
       element: (
-        <Cart cart={cart} total={total} onChange={handleQuantityProduct} />
+        <Cart cart={cart} totalPrice={totalPriceCart} onChange={handleProductQuantity} />
       ),
     },
     { path: "/*", element: <NotFound /> },

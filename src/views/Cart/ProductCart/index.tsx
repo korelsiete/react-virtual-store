@@ -5,7 +5,7 @@ const ProductCart: React.FC<CartProductProps> = ({
   id,
   image,
   title,
-  colors,
+  color,
   description,
   qty,
   price,
@@ -16,7 +16,7 @@ const ProductCart: React.FC<CartProductProps> = ({
       <img className={styles["product-img"]} src={image} alt={title} />
       <div className={styles["product-details"]}>
         <strong className={styles["product-title"]}>{title}</strong>
-        <span className={styles["product-description"]}>{colors[0]}</span>
+        <span className={styles["product-description"]}>{color}</span>
         <p className={styles["product-description"]}>{description}</p>
         <input
           className={styles["product-input"]}

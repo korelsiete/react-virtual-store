@@ -5,7 +5,7 @@ import styles from "./Cart.module.css";
 import { CartProps } from "./Cart.types";
 import ProductCart from "./ProductCart";
 
-const Cart: React.FC<CartProps> = ({ cart, total, onChange }) => {
+const Cart: React.FC<CartProps> = ({ cart, totalPrice, onChange }) => {
   return (
     <>
       <NavBar />
@@ -21,7 +21,7 @@ const Cart: React.FC<CartProps> = ({ cart, total, onChange }) => {
               image={productCart.image}
               price={productCart.price}
               qty={productCart.qty}
-              colors={productCart.colors}
+              color={productCart.color}
               onChange={onChange}
             />
           ))}
@@ -29,9 +29,9 @@ const Cart: React.FC<CartProps> = ({ cart, total, onChange }) => {
         <section className={styles["cart-resume"]}>
           <div className={styles["cart-data"]}>
             <h2 className={styles["cart-title"]}>Resumen del pedido</h2>
-            <div className={styles["cart-total"]}>
+            <div className={styles["cart-totalPrice"]}>
               <h3>Total</h3>
-              <strong className={styles["cart-price"]}>${total}</strong>
+              <strong className={styles["cart-price"]}>${totalPrice}</strong>
             </div>
             <small className={styles["cart-tax"]}>
               Incluye impuesto PAIS y percepción AFIP.

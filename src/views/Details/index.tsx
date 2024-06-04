@@ -4,25 +4,22 @@ import { DetailsProps } from "./Details.types";
 import Footer from "../../components/Footer";
 import NavBar from "../../components/NavBar";
 import styles from "./Details.module.css";
-import products from "../../assets/products.json";
 
-const Details: React.FC<DetailsProps> = ({ addToCart }) => {
-  const { id } = useParams();
-  const { title, images, colors, description, price } =
-    products.find((product) => product.id === Number(id)) || products[0];
-
-  const [quantity, setQuantity] = useState(1);
-  const [color, setColor] = useState(colors[0]);
+const Details: React.FC<DetailsProps> = ({getProduct, getCartProduct, checkProductOnCart, onClick}) => {
+  const { id: ParamsId } = useParams();
+  const { title, images, colors, description, price, id } = getProduct(Number(ParamsId));
+  const { qty: qtyCart, color: colorCart } = getCartProduct(id) || { qty: 1, color: colors[0] };
+  const [quantity, setQuantity] = useState(qtyCart);
+  const [colorInput, setColorInput] = useState(colorCart);
   const subtotal = quantity * price;
-
   const product: CartProduct = {
-    id: Number(id),
+    id,
     title,
     description,
     image: images[0],
     price,
     qty: quantity,
-    colors: [color],
+    color: colorInput
   };
 
   return (
@@ -60,7 +57,9 @@ const Details: React.FC<DetailsProps> = ({ addToCart }) => {
                   <select
                     className={styles["product-select"]}
                     id="color"
-                    onChange={(e) => setColor(e.target.value)}
+                    disabled={checkProductOnCart(id)}
+                    value={colorInput}
+                    onChange={(event) => setColorInput(event.target.value)}
                   >
                     {colors.map((color, index) => (
                       <option key={index} value={color}>
@@ -113,13 +112,14 @@ const Details: React.FC<DetailsProps> = ({ addToCart }) => {
                       min="1"
                       value={quantity}
                       onChange={(e) => setQuantity(Number(e.target.value))}
+                      disabled={checkProductOnCart(id)}
                     />
                     <button
                       type="button"
-                      className={styles["cart-btn"]}
-                      onClick={() => addToCart(product)}
+                      className={checkProductOnCart(id) ? styles["primaryButton--remove"] : styles["primaryButton--add"]}
+                      onClick={() => onClick(id, product)}
                     >
-                      Añadir al Carrito
+                      {checkProductOnCart(id) ? "Remover del carrito" : "Agregar al carrito"}
                     </button>
                   </div>
                 </div>
